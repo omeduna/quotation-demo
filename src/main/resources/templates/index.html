@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quotation Demo</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<h2>List of quotations</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>Beginning</th>
+        <th>Amount</th>
+        <th>Signed</th>
+        <th>Customer</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="quotation : ${quotations}">
+        <td th:text="${quotation.beginningOfInsurance}"></td>
+        <td th:text="${quotation.insuredAmount}"></td>
+        <td th:text="${quotation.dateOfSigningMortgage}"></td>
+        <td th:text="${quotation.customer.firstName} + ' ' + ${quotation.customer.lastName}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/quotation/create}" class="button">NEW QUOTATION</a>
+
+<h2>List of customers</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Middle name</th>
+        <th>Email</th>
+        <th>Phone number</th>
+        <th>Birth date</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="customer : ${customers}">
+        <td th:text="${customer.firstName} + ' ' + ${customer.lastName}"></td>
+        <td th:text="${customer.middleName}"></td>
+        <td th:text="${customer.email}"></td>
+        <td th:text="${customer.phoneNumber}"></td>
+        <td th:text="${customer.birthDate}"></td>
+        <td><a th:href="@{/customer/{customerId}/edit(customerId=${customer.id})}">EDIT</a></td>
+        <td><a th:href="@{/customer/{customerId}/delete(customerId=${customer.id})}">DELETE</a></td>
+    </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/customer/create}" class="button">NEW CUSTOMER</a>
+
+<h2>List of subscriptions</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>Start Date</th>
+        <th>Valid Until</th>
+        <th>Quotation</th>
+        <th>Raw data</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="subscription : ${subscriptions}">
+        <td th:text="${subscription.startDate}"></td>
+        <td th:text="${subscription.validUntil}"></td>
+        <td th:text="${subscription.quotation.dateOfSigningMortgage} + ' - ' + ${subscription.quotation.dateOfSigningMortgage}"></td>
+        <td><a th:href="@{/subscription/{subscriptionId}(subscriptionId=${subscription.id})}">RAW</a></td>
+    </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/subscription/create}" class="button">CREATE SUBSCRIPTION</a>
+</body>
+</html>
